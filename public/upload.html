@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>LUMERA - อัปโหลดรูปภาพ</title>
+
+    <link rel="stylesheet"
+        href="css/style.css">
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+
+        <div class="logo">
+            LUMERA
+        </div>
+
+        <nav class="nav-menu">
+
+            <a href="index.html">
+                หน้าแรก
+            </a>
+
+            <a href="analysis.html">
+                วิเคราะห์สไตล์
+            </a>
+
+            <a href="#">
+                ทรงผม
+            </a>
+
+            <a href="#">
+                AI Chat
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- Upload Page -->
+    <main>
+
+        <section class="upload-page">
+
+            <div class="upload-header">
+
+                <p class="eyebrow">
+                    LUMERA ANALYSIS
+                </p>
+
+                <h1>
+                    อัปโหลดรูปภาพของคุณ
+                </h1>
+
+                <p>
+                    รูปภาพจะช่วยให้ LUMERA
+                    สามารถวิเคราะห์และแนะนำสไตล์
+                    ที่เหมาะกับคุณได้แม่นยำยิ่งขึ้น
+                </p>
+
+            </div>
+
+
+            <!-- Upload Box -->
+            <div class="upload-box">
+
+                <div class="upload-icon">
+                    +
+                </div>
+
+                <h2>
+                    เลือกรูปภาพ
+                </h2>
+
+                <p>
+                    รองรับไฟล์ JPG, JPEG และ PNG
+                </p>
+
+
+                <label for="imageInput"
+                    class="upload-button">
+
+                    เลือกรูปภาพ
+
+                </label>
+
+
+                <input
+                    type="file"
+                    id="imageInput"
+                    accept="image/jpeg, image/png"
+                    hidden
+                >
+
+
+                <!-- Preview -->
+                <div
+                    id="imagePreview"
+                    class="image-preview">
+                </div>
+
+            </div>
+
+
+            <!-- Continue -->
+            <div class="upload-next">
+
+                <button
+                    id="analyzeButton"
+                    class="continue-button">
+
+                    เริ่มวิเคราะห์
+                    →
+
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+<script src="js/upload.js"></script>
+
+</body>
+
+</html>
