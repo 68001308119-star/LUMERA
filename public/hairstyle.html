@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>LUMERA | ทรงผมที่เหมาะกับคุณ</title>
+
+    <meta
+        name="description"
+        content="LUMERA แนะนำทรงผมและสไตล์ผมที่เหมาะกับคุณ พร้อมคำอธิบายและแนวทางเลือกทรงผม"
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <link
+        rel="canonical"
+        href="https://lumera-y0qy.onrender.com/hairstyle.html"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <style>
+
+        /* ================================
+           HAIRSTYLE PAGE
+        ================================= */
+
+        .hairstyle-page {
+            min-height: 100vh;
+            background: #F8F6F2;
+            padding-bottom: 80px;
+        }
+
+        .hairstyle-hero {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 100px 30px 60px;
+            text-align: center;
+        }
+
+        .hairstyle-eyebrow {
+            font-family: "Inter", sans-serif;
+            font-size: 13px;
+            letter-spacing: 3px;
+            color: #806F64;
+            margin-bottom: 18px;
+        }
+
+        .hairstyle-title {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(42px, 7vw, 76px);
+            font-weight: 500;
+            line-height: 1.05;
+            color: #292725;
+            margin: 0 0 24px;
+        }
+
+        .hairstyle-description {
+            max-width: 620px;
+            margin: 0 auto;
+            font-family: "Noto Sans Thai", sans-serif;
+            font-size: 16px;
+            line-height: 1.9;
+            color: #806F64;
+        }
+
+        .hairstyle-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .hairstyle-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        /* ================================
+           HAIRSTYLE CARD
+        ================================= */
+
+        .hairstyle-card {
+            position: relative;
+            background: #FFFFFF;
+            border: 1px solid #E5E1DC;
+            padding: 34px 28px;
+            min-height: 250px;
+            cursor: pointer;
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        .hairstyle-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(41, 39, 37, 0.08);
+            border-color: #B7AAA0;
+        }
+
+        .hairstyle-card:active {
+            transform: translateY(-2px);
+        }
+
+        .hairstyle-number {
+            font-family: "Inter", sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #B7AAA0;
+            margin-bottom: 28px;
+        }
+
+        .hairstyle-card h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 28px;
+            font-weight: 500;
+            color: #292725;
+            margin: 0 0 14px;
+        }
+
+        .hairstyle-card p {
+            font-family: "Noto Sans Thai", sans-serif;
+            font-size: 14px;
+            line-height: 1.9;
+            color: #806F64;
+            margin: 0;
+        }
+
+        .hairstyle-tag {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 7px 13px;
+            border: 1px solid #E5E1DC;
+            font-family: "Noto Sans Thai", sans-serif;
+            font-size: 12px;
+            color: #806F64;
+        }
+
+        .hairstyle-click {
+            position: absolute;
+            right: 24px;
+            bottom: 24px;
+
+            font-family: "Noto Sans Thai", sans-serif;
+            font-size: 11px;
+            color: #B7AAA0;
+        }
+
+        /* ================================
+           BOTTOM
+        ================================= */
+
+        .hairstyle-bottom {
+            text-align: center;
+            padding: 70px 30px 0;
+        }
+
+        .hairstyle-bottom p {
+            font-family: "Noto Sans Thai", sans-serif;
+            color: #806F64;
+            margin-bottom: 22px;
+        }
+
+        .hairstyle-button {
+            display: inline-block;
+            padding: 14px 28px;
+            background: #292725;
+            color: #FFFFFF;
+            text-decoration: none;
+            font-family: "Noto Sans Thai", sans-serif;
+            font-size: 14px;
+            transition: opacity 0.3s ease;
+        }
+
+        .hairstyle-button:hover {
+            opacity: 0.85;
+        }
+
+        /* ================================
+           MODAL
+        ================================= */
+
+        .hairstyle-modal {
+            position: fixed;
+            inset: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: rgba(41, 39, 37, 0.55);
+
+            opacity: 0;
+            visibility: hidden;
+
+            transition:
+                opacity 0.3s ease,
+                visibility 0.3s ease;
+
+            z-index: 9999;
+        }
+
+        .hairstyle-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hairstyle-modal-content {
+            position: relative;
+
+            width: min(680px, 100%);
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            background: #FFFFFF;
+
+            padding: 45px;
+
+            box-shadow:
+                0 30px 80px rgba(41, 39, 37, 0.18);
+
+            transform: translateY(20px) scale(0.98);
+
+            transition:
+                transform 0.3s ease;
+        }
+
+        .hairstyle-modal.active
+        .hairstyle-modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+
+            top: 18px;
+            right: 20px;
+
+            width: 38px;
+            height: 38px;
+
+            border: 1px solid #E5E1DC;
+
+            background: #FFFFFF;
+
+            color: #806F64;
+
+            font-size: 22px;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: #F8F6F2;
+            color: #292725;
+        }
+
+        .modal-eyebrow {
+            font-family: "Inter", sans-serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: #B7AAA0;
+            margin-bottom: 14px;
+        }
+
+        .modal-title {
+            font-family: "Playfair Display", serif;
+            font-size: 42px;
+            font-weight: 500;
+            color: #292725;
+            margin: 0 0 12px;
+        }
+
+        .modal-subtitle {
+            font-family: "Noto Sans Thai", sans-serif;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #806F64;
+            margin-bottom: 32px;
+        }
+
+        .modal-divider {
+            height: 1px;
+            background: #E5E1DC;
+            margin-bottom: 28px;
+        }
+
+        .modal-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .modal-info-item {
+            padding: 20px;
+            background: #F8F6F2;
+        }
+
+        .modal-info-label {
+            font-family: "Inter", sans-serif;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #B7AAA0;
+            margin-bottom: 9px;
+        }
+
+        .modal-info-text {
+            font-family: "Noto Sans Thai", sans-serif;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #292725;
+        }
+
+        .modal-description-title {
+            font-family: "Playfair Display", serif;
+            font-size: 23px;
+            font-weight: 500;
+            color: #292725;
+            margin: 32px 0 12px;
+        }
+
+        .modal-description {
+            font-family: "Noto Sans Thai", sans-serif;
+            font-size: 14px;
+            line-height: 2;
+            color: #806F64;
+            margin: 0;
+        }
+
+        .modal-style-tag {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 8px 14px;
+            border: 1px solid #E5E1DC;
+            font-family: "Noto Sans Thai", sans-serif;
+            font-size: 12px;
+            color: #806F64;
+        }
+
+        .modal-action {
+            margin-top: 32px;
+            text-align: center;
+        }
+
+        .modal-action a {
+            display: inline-block;
+            padding: 13px 25px;
+            background: #292725;
+            color: #FFFFFF;
+            text-decoration: none;
+            font-family: "Noto Sans Thai", sans-serif;
+            font-size: 13px;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-action a:hover {
+            opacity: 0.85;
+        }
+
+        /* ================================
+           MOBILE
+        ================================= */
+
+        @media (max-width: 800px) {
+
+            .hairstyle-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hairstyle-hero {
+                padding-top: 70px;
+            }
+
+            .hairstyle-modal-content {
+                padding: 35px 25px;
+            }
+
+        }
+
+        @media (max-width: 560px) {
+
+            .hairstyle-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hairstyle-container {
+                padding: 0 20px;
+            }
+
+            .hairstyle-hero {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .hairstyle-card {
+                min-height: 230px;
+            }
+
+            .modal-title {
+                font-size: 34px;
+            }
+
+            .modal-info {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .hairstyle-modal-content {
+                padding: 35px 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- ================================
+         NAVBAR
+    ================================= -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            LUMERA
+        </div>
+
+        <nav class="nav-menu">
+
+            <a href="index.html">
+                หน้าแรก
+            </a>
+
+            <a href="analysis.html">
+                วิเคราะห์สไตล์
+            </a>
+
+            <a href="hairstyle.html">
+                ทรงผม
+            </a>
+
+            <a href="chat.html">
+                AI Chat
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ================================
+         MAIN
+    ================================= -->
+
+    <main class="hairstyle-page">
+
+
+        <!-- HERO -->
+
+        <section class="hairstyle-hero">
+
+            <p class="hairstyle-eyebrow">
+                LUMERA HAIR STYLE
+            </p>
+
+            <h1 class="hairstyle-title">
+                FIND YOUR
+                <br>
+                PERFECT HAIR
+            </h1>
+
+            <p class="hairstyle-description">
+                ค้นหาทรงผมที่เหมาะกับสไตล์ของคุณ
+                ตั้งแต่ลุคเรียบหรูไปจนถึงลุคทันสมัย
+                พร้อมคำแนะนำจาก LUMERA AI
+            </p>
+
+        </section>
+
+
+        <!-- HAIRSTYLE CARDS -->
+
+        <section class="hairstyle-container">
+
+            <div class="hairstyle-grid">
+
+
+                <!-- 01 KOREAN LAYER -->
+
+                <article
+                    class="hairstyle-card"
+                    data-hairstyle="korean"
+                >
+
+                    <div class="hairstyle-number">
+                        01
+                    </div>
+
+                    <h2>
+                        Korean Layer
+                    </h2>
+
+                    <p>
+                        ทรงเลเยอร์สไตล์เกาหลี
+                        ช่วยเพิ่มมิติให้เส้นผม
+                        เหมาะกับลุคที่ดูเป็นธรรมชาติ
+                        และทันสมัย
+                    </p>
+
+                    <span class="hairstyle-tag">
+                        Natural · Modern
+                    </span>
+
+                    <span class="hairstyle-click">
+                        คลิกเพื่อดูรายละเอียด →
+                    </span>
+
+                </article>
+
+
+                <!-- 02 C-CURL -->
+
+                <article
+                    class="hairstyle-card"
+                    data-hairstyle="ccurl"
+                >
+
+                    <div class="hairstyle-number">
+                        02
+                    </div>
+
+                    <h2>
+                        C-Curl
+                    </h2>
+
+                    <p>
+                        ปลายผมโค้งเป็นรูปตัว C
+                        ให้ลุคอ่อนหวานและเรียบร้อย
+                        สามารถปรับให้เข้ากับสไตล์
+                        ในชีวิตประจำวันได้ง่าย
+                    </p>
+
+                    <span class="hairstyle-tag">
+                        Soft · Elegant
+                    </span>
+
+                    <span class="hairstyle-click">
+                        คลิกเพื่อดูรายละเอียด →
+                    </span>
+
+                </article>
+
+
+                <!-- 03 HUSH CUT -->
+
+                <article
+                    class="hairstyle-card"
+                    data-hairstyle="hush"
+                >
+
+                    <div class="hairstyle-number">
+                        03
+                    </div>
+
+                    <h2>
+                        Hush Cut
+                    </h2>
+
+                    <p>
+                        ทรงผมเลเยอร์ที่มีความเบา
+                        และมีวอลลุ่ม เหมาะสำหรับ
+                        ผู้ที่ต้องการลุคแฟชั่น
+                        แต่ยังดูเป็นธรรมชาติ
+                    </p>
+
+                    <span class="hairstyle-tag">
+                        Light · Fashion
+                    </span>
+
+                    <span class="hairstyle-click">
+                        คลิกเพื่อดูรายละเอียด →
+                    </span>
+
+                </article>
+
+
+                <!-- 04 WOLF CUT -->
+
+                <article
+                    class="hairstyle-card"
+                    data-hairstyle="wolf"
+                >
+
+                    <div class="hairstyle-number">
+                        04
+                    </div>
+
+                    <h2>
+                        Wolf Cut
+                    </h2>
+
+                    <p>
+                        ทรงที่ผสมระหว่างเลเยอร์
+                        และความเท่แบบมีเอกลักษณ์
+                        เหมาะกับผู้ที่ต้องการ
+                        ลุคโดดเด่นและมีสไตล์
+                    </p>
+
+                    <span class="hairstyle-tag">
+                        Bold · Edgy
+                    </span>
+
+                    <span class="hairstyle-click">
+                        คลิกเพื่อดูรายละเอียด →
+                    </span>
+
+                </article>
+
+
+                <!-- 05 LONG LAYER -->
+
+                <article
+                    class="hairstyle-card"
+                    data-hairstyle="long"
+                >
+
+                    <div class="hairstyle-number">
+                        05
+                    </div>
+
+                    <h2>
+                        Long Layer
+                    </h2>
+
+                    <p>
+                        เลเยอร์สำหรับผมยาว
+                        ช่วยเพิ่มความพลิ้วไหว
+                        และทำให้ทรงผมดูมีมิติ
+                        โดยยังคงความเรียบหรู
+                    </p>
+
+                    <span class="hairstyle-tag">
+                        Elegant · Soft
+                    </span>
+
+                    <span class="hairstyle-click">
+                        คลิกเพื่อดูรายละเอียด →
+                    </span>
+
+                </article>
+
+
+                <!-- 06 BOB -->
+
+                <article
+                    class="hairstyle-card"
+                    data-hairstyle="bob"
+                >
+
+                    <div class="hairstyle-number">
+                        06
+                    </div>
+
+                    <h2>
+                        Bob
+                    </h2>
+
+                    <p>
+                        ทรงผมบ๊อบที่ดูสะอาด
+                        และทันสมัย สามารถปรับ
+                        ความยาวและรูปทรงให้เหมาะ
+                        กับสไตล์ที่ต้องการได้
+                    </p>
+
+                    <span class="hairstyle-tag">
+                        Clean · Chic
+                    </span>
+
+                    <span class="hairstyle-click">
+                        คลิกเพื่อดูรายละเอียด →
+                    </span>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- BOTTOM -->
+
+        <section class="hairstyle-bottom">
+
+            <p>
+                อยากรู้ว่าทรงไหนเหมาะกับคุณ?
+            </p>
+
+            <a
+                href="analysis.html"
+                class="hairstyle-button"
+            >
+                เริ่มวิเคราะห์สไตล์
+            </a>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================================
+         HAIRSTYLE MODAL
+    ================================= -->
+
+    <div
+        class="hairstyle-modal"
+        id="hairstyleModal"
+        aria-hidden="true"
+    >
+
+        <div
+            class="hairstyle-modal-content"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modalTitle"
+        >
+
+            <button
+                class="modal-close"
+                id="modalClose"
+                type="button"
+                aria-label="ปิด"
+            >
+                ×
+            </button>
+
+
+            <p
+                class="modal-eyebrow"
+                id="modalEyebrow"
+            >
+                LUMERA HAIR STYLE
+            </p>
+
+
+            <h2
+                class="modal-title"
+                id="modalTitle"
+            >
+                Korean Layer
+            </h2>
+
+
+            <p
+                class="modal-subtitle"
+                id="modalSubtitle"
+            >
+                ทรงเลเยอร์สไตล์เกาหลี
+            </p>
+
+
+            <div class="modal-divider"></div>
+
+
+            <div class="modal-info">
+
+
+                <div class="modal-info-item">
+
+                    <div class="modal-info-label">
+                        FACE SHAPE
+                    </div>
+
+                    <div
+                        class="modal-info-text"
+                        id="modalFace"
+                    >
+                        รูปไข่ · หน้ากลม · หน้ายาว
+                    </div>
+
+                </div>
+
+
+                <div class="modal-info-item">
+
+                    <div class="modal-info-label">
+                        HAIR TYPE
+                    </div>
+
+                    <div
+                        class="modal-info-text"
+                        id="modalHair"
+                    >
+                        ผมตรง · ผมลอนอ่อน
+                    </div>
+
+                </div>
+
+
+                <div class="modal-info-item">
+
+                    <div class="modal-info-label">
+                        MAINTENANCE
+                    </div>
+
+                    <div
+                        class="modal-info-text"
+                        id="modalMaintenance"
+                    >
+                        ปานกลาง
+                    </div>
+
+                </div>
+
+
+                <div class="modal-info-item">
+
+                    <div class="modal-info-label">
+                        STYLE VIBE
+                    </div>
+
+                    <div
+                        class="modal-info-text"
+                        id="modalVibe"
+                    >
+                        Natural · Modern
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <h3 class="modal-description-title">
+                ลักษณะทรงผม
+            </h3>
+
+            <p
+                class="modal-description"
+                id="modalDescription"
+            >
+                ทรงผมเลเยอร์ที่แบ่งระดับของเส้นผม
+                ให้เกิดความพลิ้วและมีมิติ
+                โดยยังคงความเป็นธรรมชาติ
+                เหมาะกับคนที่ต้องการลุคทันสมัย
+                และดูไม่เป็นทางการจนเกินไป
+            </p>
+
+
+            <span
+                class="modal-style-tag"
+                id="modalTag"
+            >
+                Natural · Modern
+            </span>
+
+
+            <div class="modal-action">
+
+                <a href="analysis.html">
+                    ให้ LUMERA วิเคราะห์ว่าทรงนี้เหมาะกับคุณ
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================
+         JAVASCRIPT
+    ================================= -->
+
+    <script>
+
+        const hairstyleData = {
+
+            korean: {
+                title: "Korean Layer",
+                subtitle: "ทรงเลเยอร์สไตล์เกาหลี",
+                face: "รูปไข่ · หน้ากลม · หน้ายาว",
+                hair: "ผมตรง · ผมลอนอ่อน",
+                maintenance: "ปานกลาง",
+                vibe: "Natural · Modern",
+                description:
+                    "ทรงผมเลเยอร์ที่แบ่งระดับของเส้นผมให้เกิดความพลิ้วและมีมิติ โดยยังคงความเป็นธรรมชาติ เหมาะกับคนที่ต้องการลุคทันสมัย ดูละมุน และสามารถจัดทรงได้ในชีวิตประจำวัน",
+                tag: "Natural · Modern"
+            },
+
+
+            ccurl: {
+                title: "C-Curl",
+                subtitle: "ทรงปลายผมโค้งเป็นรูปตัว C",
+                face: "รูปไข่ · หน้ายาว · หน้ากลม",
+                hair: "ผมตรง · ผมลอนอ่อน",
+                maintenance: "ปานกลาง",
+                vibe: "Soft · Elegant",
+                description:
+                    "ทรงผมที่เน้นการม้วนปลายผมให้โค้งเข้าด้านในเป็นรูปตัว C ช่วยให้ปลายผมดูเรียบร้อย มีน้ำหนัก และให้ความรู้สึกอ่อนหวาน เหมาะกับลุคสุภาพและดูแลไม่ยาก",
+                tag: "Soft · Elegant"
+            },
+
+
+            hush: {
+                title: "Hush Cut",
+                subtitle: "ทรงเลเยอร์เบา ๆ ที่มีวอลลุ่ม",
+                face: "รูปไข่ · หน้ากลม · หน้ายาว",
+                hair: "ผมตรง · ผมลอน",
+                maintenance: "ปานกลาง",
+                vibe: "Light · Fashion",
+                description:
+                    "ทรงเลเยอร์ที่เน้นความเบาของเส้นผมและการไล่ระดับหลายชั้น ช่วยให้ผมดูมีวอลลุ่มและเคลื่อนไหวได้ดี เหมาะกับคนที่ต้องการลุคแฟชั่นแต่ยังดูเป็นธรรมชาติ",
+                tag: "Light · Fashion"
+            },
+
+
+            wolf: {
+                title: "Wolf Cut",
+                subtitle: "ทรงเลเยอร์ที่ผสมความเท่และความโดดเด่น",
+                face: "รูปไข่ · หน้ายาว · หน้าหัวใจ",
+                hair: "ผมตรง · ผมลอน · ผมหนา",
+                maintenance: "ปานกลางถึงสูง",
+                vibe: "Bold · Edgy",
+                description:
+                    "ทรงผมที่ผสมระหว่างเลเยอร์แบบมีวอลลุ่มกับรูปทรงที่ดูเท่และมีเอกลักษณ์ ชั้นผมด้านบนจะมีมิติมากขึ้น ส่วนช่วงปลายช่วยสร้างความเคลื่อนไหว เหมาะกับคนที่ต้องการลุคโดดเด่น",
+                tag: "Bold · Edgy"
+            },
+
+
+            long: {
+                title: "Long Layer",
+                subtitle: "ทรงเลเยอร์สำหรับผมยาว",
+                face: "รูปไข่ · หน้ากลม · หน้ายาว",
+                hair: "ผมยาว · ผมตรง · ผมลอน",
+                maintenance: "ปานกลาง",
+                vibe: "Elegant · Soft",
+                description:
+                    "การตัดเลเยอร์บนผมยาวเพื่อเพิ่มความพลิ้วไหวและมิติให้เส้นผม โดยยังคงความยาวเอาไว้ เหมาะกับคนที่ชอบผมยาวและต้องการให้ทรงดูเบา ไม่ทื่อ และมีความเรียบหรู",
+                tag: "Elegant · Soft"
+            },
+
+
+            bob: {
+                title: "Bob",
+                subtitle: "ทรงผมบ๊อบที่สะอาดและทันสมัย",
+                face: "รูปไข่ · หน้ารูปหัวใจ · หน้ายาว",
+                hair: "ผมตรง · ผมเส้นเล็กถึงปานกลาง",
+                maintenance: "ปานกลาง",
+                vibe: "Clean · Chic",
+                description:
+                    "ทรงผมบ๊อบที่ตัดความยาวให้อยู่บริเวณกรอบหน้า สามารถปรับระดับความสั้นและรูปทรงได้หลายแบบ ให้ลุคสะอาด ทันสมัย และดูเป็นระเบียบ เหมาะกับคนที่ต้องการเปลี่ยนลุคให้ชัดเจน",
+                tag: "Clean · Chic"
+            }
+
+        };
+
+
+        const hairstyleCards =
+            document.querySelectorAll(".hairstyle-card");
+
+        const hairstyleModal =
+            document.getElementById("hairstyleModal");
+
+        const modalClose =
+            document.getElementById("modalClose");
+
+        const modalTitle =
+            document.getElementById("modalTitle");
+
+        const modalSubtitle =
+            document.getElementById("modalSubtitle");
+
+        const modalFace =
+            document.getElementById("modalFace");
+
+        const modalHair =
+            document.getElementById("modalHair");
+
+        const modalMaintenance =
+            document.getElementById("modalMaintenance");
+
+        const modalVibe =
+            document.getElementById("modalVibe");
+
+        const modalDescription =
+            document.getElementById("modalDescription");
+
+        const modalTag =
+            document.getElementById("modalTag");
+
+
+        function openHairstyleModal(type) {
+
+            const data =
+                hairstyleData[type];
+
+            if (!data) {
+                return;
+            }
+
+            modalTitle.textContent =
+                data.title;
+
+            modalSubtitle.textContent =
+                data.subtitle;
+
+            modalFace.textContent =
+                data.face;
+
+            modalHair.textContent =
+                data.hair;
+
+            modalMaintenance.textContent =
+                data.maintenance;
+
+            modalVibe.textContent =
+                data.vibe;
+
+            modalDescription.textContent =
+                data.description;
+
+            modalTag.textContent =
+                data.tag;
+
+            hairstyleModal.classList.add("active");
+
+            hairstyleModal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+            document.body.style.overflow = "hidden";
+
+        }
+
+
+        function closeHairstyleModal() {
+
+            hairstyleModal.classList.remove("active");
+
+            hairstyleModal.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+            document.body.style.overflow = "";
+
+        }
+
+
+        hairstyleCards.forEach(card => {
+
+            card.addEventListener(
+                "click",
+                () => {
+
+                    const type =
+                        card.dataset.hairstyle;
+
+                    openHairstyleModal(type);
+
+                }
+            );
+
+        });
+
+
+        modalClose.addEventListener(
+            "click",
+            closeHairstyleModal
+        );
+
+
+        hairstyleModal.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target ===
+                    hairstyleModal
+                ) {
+
+                    closeHairstyleModal();
+
+                }
+
+            }
+        );
+
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Escape" &&
+                    hairstyleModal.classList.contains(
+                        "active"
+                    )
+                ) {
+
+                    closeHairstyleModal();
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

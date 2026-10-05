@@ -2,19 +2,13 @@
 <html lang="th">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>LUMERA - อัปโหลดรูปภาพ</title>
 
-    <link rel="stylesheet"
-        href="css/style.css">
-
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 
 <body>
 
@@ -35,11 +29,11 @@
                 วิเคราะห์สไตล์
             </a>
 
-            <a href="#">
+            <a href="hairstyle.html">
                 ทรงผม
             </a>
 
-            <a href="#">
+            <a href="chat.html">
                 AI Chat
             </a>
 
@@ -88,6 +82,7 @@
                 </p>
 
 
+                <!-- Upload Button -->
                 <label for="imageInput"
                     class="upload-button">
 
@@ -96,6 +91,7 @@
                 </label>
 
 
+                <!-- File Input -->
                 <input
                     type="file"
                     id="imageInput"
@@ -104,10 +100,24 @@
                 >
 
 
+                <!-- File Name -->
+                <p
+                    id="fileName"
+                    class="file-name">
+                </p>
+
+
                 <!-- Preview -->
                 <div
                     id="imagePreview"
                     class="image-preview">
+
+                    <img
+                        id="previewImage"
+                        src=""
+                        alt="ตัวอย่างรูปภาพ"
+                    >
+
                 </div>
 
             </div>
@@ -118,7 +128,8 @@
 
                 <button
                     id="analyzeButton"
-                    class="continue-button">
+                    class="continue-button"
+                    type="button">
 
                     เริ่มวิเคราะห์
                     →
@@ -132,7 +143,7 @@
     </main>
 
 
-<script src="js/upload.js"></script>
+    <script src="js/upload.js"></script>
 
 </body>
 

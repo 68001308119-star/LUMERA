@@ -1,268 +1,413 @@
-// =========================
-// IMAGE UPLOAD
-// =========================
+document.addEventListener("DOMContentLoaded", function () {
 
-const imageInput =
-    document.getElementById("imageInput");
+    // =====================================================
+    // ELEMENTS
+    // =====================================================
 
-const imagePreview =
-    document.getElementById("imagePreview");
+    const uploadInput =
+        document.getElementById("imageInput");
 
+    const previewImage =
+        document.getElementById("previewImage");
 
-imageInput.addEventListener(
-    "change",
-    function () {
+    const previewContainer =
+        document.getElementById("imagePreview");
 
-        const file =
-            imageInput.files[0];
+    const analyzeButton =
+        document.getElementById("analyzeButton");
 
-        if (!file) {
-            return;
-        }
-
-
-        if (
-            file.type !== "image/jpeg" &&
-            file.type !== "image/png"
-        ) {
-
-            alert(
-                "กรุณาเลือกไฟล์ JPG, JPEG หรือ PNG"
-            );
-
-            imageInput.value = "";
-
-            return;
-        }
+    const fileName =
+        document.getElementById("fileName");
 
 
-        const reader =
-            new FileReader();
+    // เก็บไฟล์รูปที่ผู้ใช้เลือก
+    let selectedImage = null;
 
 
-        reader.onload =
+    // =====================================================
+    // IMAGE UPLOAD
+    // =====================================================
+
+    if (uploadInput) {
+
+        uploadInput.addEventListener(
+            "change",
             function (event) {
 
-                imagePreview.innerHTML = `
-                    <img
-                        src="${event.target.result}"
-                        alt="รูปภาพของคุณ"
-                    >
-                `;
-
-            };
+                const file =
+                    event.target.files[0];
 
 
-        reader.readAsDataURL(file);
+                // ไม่มีไฟล์
+                if (!file) {
+                    return;
+                }
+
+
+                // =================================================
+                // CHECK FILE TYPE
+                // =================================================
+
+                if (!file.type.startsWith("image/")) {
+
+                    alert(
+                        "กรุณาเลือกไฟล์รูปภาพเท่านั้นค่ะ"
+                    );
+
+                    uploadInput.value = "";
+
+                    return;
+                }
+
+
+                // =================================================
+                // CHECK FILE SIZE
+                // =================================================
+
+                // จำกัดไม่เกิน 10 MB
+                if (file.size > 10 * 1024 * 1024) {
+
+                    alert(
+                        "รูปภาพต้องมีขนาดไม่เกิน 10 MB ค่ะ"
+                    );
+
+                    uploadInput.value = "";
+
+                    return;
+                }
+
+
+                // เก็บไฟล์
+                selectedImage = file;
+
+
+                // =================================================
+                // SHOW FILE NAME
+                // =================================================
+
+                if (fileName) {
+
+                    fileName.textContent =
+                        "ไฟล์ที่เลือก: " + file.name;
+                }
+
+
+                // =================================================
+                // PREVIEW IMAGE
+                // =================================================
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload = function (e) {
+
+                    if (previewImage) {
+
+                        previewImage.src =
+                            e.target.result;
+
+                        previewImage.style.display =
+                            "block";
+                    }
+
+
+                    if (previewContainer) {
+
+                        previewContainer.style.display =
+                            "block";
+                    }
+
+                };
+
+
+                reader.readAsDataURL(file);
+
+            }
+        );
 
     }
-);
 
 
-// =========================
-// ANALYZE BUTTON
-// =========================
+    // =====================================================
+    // ANALYZE BUTTON
+    // =====================================================
 
-const analyzeButton =
-    document.getElementById(
-        "analyzeButton"
-    );
+    if (analyzeButton) {
 
-
-analyzeButton.addEventListener(
-    "click",
-    async function () {
-
-        const file =
-            imageInput.files[0];
+        analyzeButton.addEventListener(
+            "click",
+            async function () {
 
 
-        if (!file) {
+                // =================================================
+                // CHECK IMAGE
+                // =================================================
 
-            alert(
-                "กรุณาเลือกรูปภาพก่อนเริ่มวิเคราะห์"
-            );
+                if (!selectedImage) {
 
-            return;
-        }
+                    alert(
+                        "กรุณาเลือกรูปภาพก่อนค่ะ"
+                    );
 
-
-        const gender =
-            sessionStorage.getItem(
-                "selectedGender"
-            );
+                    return;
+                }
 
 
-        const categories =
-            JSON.parse(
-                sessionStorage.getItem(
-                    "selectedCategories"
-                ) || "[]"
-            );
+                // =================================================
+                // GET GENDER
+                // =================================================
+
+                let gender = "";
 
 
-        if (!gender) {
-
-            alert(
-                "ไม่พบข้อมูลการเลือก กรุณากลับไปเลือกข้อมูลใหม่"
-            );
-
-            window.location.href =
-                "analysis.html";
-
-            return;
-        }
+                const genderElement =
+                    document.querySelector(
+                        'input[name="gender"]:checked'
+                    );
 
 
-        if (categories.length === 0) {
+                if (genderElement) {
 
-            alert(
-                "ไม่พบด้านความงามที่เลือก กรุณาเลือกใหม่"
-            );
-
-            window.location.href =
-                "analysis.html";
-
-            return;
-        }
+                    gender =
+                        genderElement.value;
+                }
 
 
-        // =========================
-        // READ IMAGE
-        // =========================
+                // =================================================
+                // GET CATEGORIES
+                // =================================================
 
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            async function (event) {
-
-                const image =
-                    event.target.result;
+                let categories = [];
 
 
-                // เก็บรูปไว้สำหรับหน้า Result
+                // รองรับ name="category"
+                const categoryElements =
+                    document.querySelectorAll(
+                        'input[name="category"]:checked'
+                    );
 
-                sessionStorage.setItem(
-                    "uploadedImage",
-                    image
+
+                categoryElements.forEach(
+                    function (element) {
+
+                        categories.push(
+                            element.value
+                        );
+
+                    }
                 );
 
 
-                sessionStorage.setItem(
-                    "uploadedImageName",
-                    file.name
-                );
+                // รองรับ name="categories"
+                if (categories.length === 0) {
+
+                    const alternativeCategories =
+                        document.querySelectorAll(
+                            'input[name="categories"]:checked'
+                        );
 
 
-                // =========================
+                    alternativeCategories.forEach(
+                        function (element) {
+
+                            categories.push(
+                                element.value
+                            );
+
+                        }
+                    );
+
+                }
+
+
+                // =================================================
+                // CHECK CATEGORY
+                // =================================================
+
+                /*
+                    ถ้าไม่มี checkbox หมวดหมู่
+                    ให้ใช้ค่าพื้นฐานแทน
+                */
+
+                if (categories.length === 0) {
+
+                    categories = [
+                        "ทรงผม",
+                        "การแต่งตัว",
+                        "สีที่เหมาะกับคุณ"
+                    ];
+
+                }
+
+
+                // =================================================
                 // BUTTON LOADING
-                // =========================
+                // =================================================
+
+                const originalText =
+                    analyzeButton.textContent;
+
 
                 analyzeButton.disabled =
                     true;
 
-                analyzeButton.innerText =
-                    "LUMERA AI กำลังวิเคราะห์...";
+
+                analyzeButton.textContent =
+                    "LUMERA กำลังวิเคราะห์...";
 
 
-                try {
+                // =================================================
+                // READ IMAGE
+                // =================================================
 
-                    // =========================
-                    // SEND DATA TO SERVER
-                    // =========================
+                const reader =
+                    new FileReader();
 
-                    const response =
-                        await fetch(
-                            "/api/analyze",
-                            {
-                                method: "POST",
 
-                                headers: {
-                                    "Content-Type":
-                                        "application/json"
-                                },
+                reader.onload = async function (event) {
 
-                                body: JSON.stringify({
+                    try {
 
-                                    gender:
-                                        gender,
+                        const imageData =
+                            event.target.result;
 
-                                    categories:
-                                        categories,
 
-                                    image:
-                                        image
+                        // =================================================
+                        // SAVE IMAGE
+                        // =================================================
 
-                                })
-
-                            }
+                        sessionStorage.setItem(
+                            "uploadedImage",
+                            imageData
                         );
 
 
-                    const data =
-                        await response.json();
+                        // =================================================
+                        // SEND IMAGE TO SERVER
+                        // =================================================
+
+                        const response =
+                            await fetch(
+                                "/api/analyze",
+                                {
+                                    method: "POST",
+
+                                    headers: {
+                                        "Content-Type":
+                                            "application/json"
+                                    },
+
+                                    body:
+                                        JSON.stringify({
+
+                                            gender:
+                                                gender ||
+                                                "ไม่ได้ระบุ",
+
+                                            categories:
+                                                categories,
+
+                                            image:
+                                                imageData
+
+                                        })
+                                }
+                            );
 
 
-                    // =========================
-                    // CHECK RESULT
-                    // =========================
+                        // =================================================
+                        // GET SERVER RESPONSE
+                        // =================================================
 
-                    if (!data.success) {
+                        const data =
+                            await response.json();
 
-                        throw new Error(
-                            data.error ||
-                            "ไม่สามารถวิเคราะห์ได้"
+
+                        // =================================================
+                        // CHECK RESPONSE
+                        // =================================================
+
+                        if (
+                            !response.ok ||
+                            !data.success
+                        ) {
+
+                            throw new Error(
+                                data.error ||
+                                "ไม่สามารถวิเคราะห์รูปภาพได้"
+                            );
+
+                        }
+
+
+                        // =================================================
+                        // SAVE AI RESULT
+                        // =================================================
+
+                        sessionStorage.setItem(
+                            "aiResult",
+                            data.result
                         );
+
+
+                        sessionStorage.setItem(
+                            "analysisGender",
+                            gender ||
+                            "ไม่ได้ระบุ"
+                        );
+
+
+                        sessionStorage.setItem(
+                            "analysisCategories",
+                            JSON.stringify(
+                                categories
+                            )
+                        );
+
+
+                        // =================================================
+                        // GO TO RESULT PAGE
+                        // =================================================
+
+                        window.location.href =
+                            "/result.html";
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Analysis Error:",
+                            error
+                        );
+
+
+                        alert(
+                            "เกิดข้อผิดพลาดในการวิเคราะห์ค่ะ\n\n" +
+                            error.message
+                        );
+
+
+                        // เปิดปุ่มกลับมา
+                        analyzeButton.disabled =
+                            false;
+
+
+                        analyzeButton.textContent =
+                            originalText;
 
                     }
 
-
-                    // =========================
-                    // SAVE AI RESULT
-                    // =========================
-
-                    sessionStorage.setItem(
-                        "aiResult",
-                        data.result
-                    );
+                };
 
 
-                    // =========================
-                    // GO TO RESULT PAGE
-                    // =========================
+                reader.readAsDataURL(
+                    selectedImage
+                );
 
-                    window.location.href =
-                        "result.html";
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Analysis Error:",
-                        error
-                    );
-
-
-                    alert(
-                        "เกิดข้อผิดพลาดในการวิเคราะห์\n\n" +
-                        error.message
-                    );
-
-
-                    analyzeButton.disabled =
-                        false;
-
-                    analyzeButton.innerText =
-                        "เริ่มวิเคราะห์ →";
-
-                }
-
-            };
-
-
-        reader.readAsDataURL(file);
+            }
+        );
 
     }
-);
+
+});
